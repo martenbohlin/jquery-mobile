@@ -9,7 +9,7 @@ define( [ "jquery", "./listview" ], function( $ ) {
 $.mobile.listview.prototype.options.autodividers = false;
 $.mobile.listview.prototype.options.autodividersSelector = function( elt ) {
 	// look for the text in the given element
-	var text = elt.text() || null;
+	var text = $.trim( elt.text() ) || null;
 
 	if ( !text ) {
 		return null;
@@ -24,7 +24,7 @@ $.mobile.listview.prototype.options.autodividersSelector = function( elt ) {
 $( document ).delegate( "ul,ol", "listviewcreate", function() {
 
 	var list = $( this ),
-			listview = list.data( "listview" );
+			listview = list.data( "mobile-listview" );
 
 	if ( !listview || !listview.options.autodividers ) {
 		return;

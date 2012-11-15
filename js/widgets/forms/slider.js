@@ -5,7 +5,7 @@
 //>>css.structure: ../css/structure/jquery.mobile.forms.slider.css
 //>>css.theme: ../css/themes/default/jquery.mobile.theme.css
 
-define( [ "jquery", "../../jquery.mobile.core", "../../jquery.mobile.widget", "./textinput", "../../jquery.mobile.buttonMarkup" ], function( $ ) {
+define( [ "jquery", "../../jquery.mobile.core", "../../jquery.mobile.widget", "./textinput", "../../jquery.mobile.buttonMarkup", "./reset" ], function( $ ) {
 //>>excludeEnd("jqmBuildExclude");
 (function( $, undefined ) {
 
@@ -178,6 +178,10 @@ $.widget( "mobile.slider", $.mobile.widget, {
 
 		this.handle.bind( "vclick", false );
 
+		if ( this._handleFormReset ) {
+			this._handleFormReset();
+		}
+
 		this.refresh( undefined, undefined, true );
 	},
 
@@ -341,6 +345,11 @@ $.widget( "mobile.slider", $.mobile.widget, {
 		return  this.isToggleSwitch ? this.element[0].selectedIndex : parseFloat( this.element.val() ) ;
 	},
 
+
+	_reset: function() {
+		this.refresh( undefined, false, true );
+	},
+
 	refresh: function( val, isfromControl, preventInputUpdate ) {
 
 		// NOTE: we don't return here because we want to support programmatic
@@ -467,6 +476,8 @@ $.widget( "mobile.slider", $.mobile.widget, {
 	}
 
 });
+
+$.widget( "mobile.slider", $.mobile.slider, $.mobile.behaviors.formReset );
 
 //auto self-init widgets
 $( document ).bind( "pagecreate create", function( e ) {

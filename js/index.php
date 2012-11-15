@@ -19,7 +19,7 @@ $files = array(
 	'jquery.hashchange.js',
 	'widgets/page.js',
 	'jquery.mobile.core.js',
-    'widgets/loader.js',
+	'widgets/loader.js',
 	'jquery.mobile.navigation.js',
 	'jquery.mobile.navigation.pushstate.js',
 	'jquery.mobile.transition.js',
@@ -34,6 +34,7 @@ $files = array(
 	'widgets/dialog.js',
 	'widgets/page.sections.js',
 	'widgets/collapsible.js',
+	'widgets/addFirstLastClasses.js',
 	'widgets/collapsibleSet.js',
 	'jquery.mobile.fieldContain.js',
 	'jquery.mobile.grid.js',
@@ -42,6 +43,7 @@ $files = array(
 	'widgets/listview.filter.js',
 	'widgets/listview.autodividers.js',
 	'jquery.mobile.nojs.js',
+	'widgets/forms/reset.js',
 	'widgets/forms/checkboxradio.js',
 	'widgets/forms/button.js',
 	'widgets/forms/slider.js',
@@ -49,13 +51,37 @@ $files = array(
 	'widgets/forms/select.custom.js',
 	'widgets/forms/select.js',
 	'jquery.mobile.buttonMarkup.js',
-	'jquery.mobile.controlGroup.js',
+	'widgets/controlgroup.js',
 	'jquery.mobile.links.js',
 	'widgets/fixedToolbar.js',
+	'widgets/fixedToolbar.workarounds.js',
 	'widgets/popup.js',
 	'jquery.mobile.zoom.js',
 	'jquery.mobile.zoom.iosorientationfix.js',
 	'jquery.mobile.init.js'
 );
+
+function getCommitId() {
+	$logs = file_get_contents( "../.git/logs/HEAD" );
+	if ( $logs ) {
+		$logs = explode( "\n", $logs );
+		$n_logs = count( $logs );
+		if ( $n_logs > 1 ) {
+			$log = explode( " ", $logs[ $n_logs - 2 ] );
+			if ( count( $log ) > 1 ) {
+				return $log[ 1 ];
+			}
+		}
+	}
+
+	return false;
+}
+
+$comment = getCommitId();
+if ( !$comment ) {
+	unset( $comment );
+} else {
+	$comment = "/* git commitid " . $comment . " */\n";
+}
 
 require_once('../combine.php');
